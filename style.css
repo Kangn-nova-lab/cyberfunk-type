@@ -1,0 +1,137 @@
+:root {
+    --background-color: #0d0d0d;
+    --text-color: #00ffde;
+    --border-color: #00ffde;
+    --highlight-color: #ff00ff;
+    --grid-color: #333;
+    --title-font: 'Orbitron', sans-serif;
+    --body-font: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--body-font); /* Default to Korean font */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+/* Screen Management */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+#game-container, #intro-screen, #leaderboard-screen {
+    border: 2px solid var(--border-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--border-color);
+}
+
+#game-container {
+    display: flex;
+    gap: 20px;
+}
+
+#tetris-board {
+    border: 2px solid var(--border-color);
+    background-color: #000;
+}
+
+#game-info {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.title {
+    font-family: var(--title-font);
+    font-size: 2.5rem;
+    color: var(--highlight-color);
+    text-shadow: 0 0 10px var(--highlight-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    margin-bottom: 20px;
+}
+
+.info-item h2 {
+    font-family: var(--title-font);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.info-item p {
+    font-size: 1.2rem;
+}
+
+#next-piece {
+    border: 1px solid var(--border-color);
+    background-color: #000;
+}
+
+#player-name {
+    display: block;
+    width: 80%;
+    margin: 0 auto 20px;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #1a1a1a;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    font-family: var(--body-font);
+}
+
+#start-game, #play-again {
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+    border: none;
+    padding: 15px;
+    font-size: 1.2rem;
+    font-family: var(--title-font);
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--highlight-color);
+    transition: all 0.3s ease;
+}
+
+#start-game:hover, #play-again:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    box-shadow: 0 0 15px var(--text-color);
+}
+
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#leaderboard-table th, #leaderboard-table td {
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    text-align: left;
+}
+
+#leaderboard-table th {
+    font-family: var(--title-font);
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+}
