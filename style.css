@@ -15,16 +15,30 @@ body {
     color: var(--text-color);
     font-family: var(--body-font);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
 }
 
 .screen {
     display: none;
     max-width: 90vw;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .screen.active {
@@ -37,6 +51,18 @@ body {
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
     background: rgba(13, 13, 13, 0.9);
+}
+
+#disqus-container {
+    display: none; /* 댓글 컨테이너는 기본적으로 숨김 */
+    border: 2px solid var(--border-color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
+    background: rgba(13, 13, 13, 0.9);
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 800px;
 }
 
 #game-container {
@@ -145,4 +171,10 @@ button:hover {
 @media (max-width: 600px) {
     #game-container { flex-direction: column; }
     .button-group { flex-direction: column; }
+    #intro-screen, #leaderboard-screen, #partnership-screen, #disqus-container {
+      padding: 20px;
+    }
+    .title {
+      font-size: 2rem;
+    }
 }

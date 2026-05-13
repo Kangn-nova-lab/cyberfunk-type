@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameScreen = document.getElementById('game-screen');
     const leaderboardScreen = document.getElementById('leaderboard-screen');
     const partnershipScreen = document.getElementById('partnership-screen');
+    const disqusContainer = document.getElementById('disqus-container');
     const playerNameInput = document.getElementById('player-name');
     const startGameButton = document.getElementById('start-game');
     const playAgainButton = document.getElementById('play-again');
@@ -36,6 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function showScreen(screen) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         screen.classList.add('active');
+
+        if (screen === leaderboardScreen) {
+            disqusContainer.style.display = 'block';
+        } else {
+            disqusContainer.style.display = 'none';
+        }
+
         if (screen === partnershipScreen) {
             formStatus.textContent = '';
             formStatus.className = '';
@@ -187,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
         leaderboardTableBody.innerHTML = '';
         scores.forEach((score, index) => {
             const row = document.createElement('tr');
-            row.innerHTML = "<td>" + (index + 1) + "</td><td>" + score.name + "</td><td>" + score.score + "</td>";
+            row.innerHTML = `<td>${index + 1}</td><td>${score.name}</td><td>${score.score}</td>`;
             leaderboardTableBody.appendChild(row);
         });
     }
