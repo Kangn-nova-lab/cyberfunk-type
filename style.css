@@ -31,7 +31,6 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 40px;
 }
 
 .screen {
@@ -45,36 +44,118 @@ body {
     display: block;
 }
 
-#game-container, #intro-screen, #leaderboard-screen, #partnership-screen {
+#game-container, #intro-screen, #leaderboard-screen, #partnership-screen, #animal-test-screen, #tetris-setup-screen {
     border: 2px solid var(--border-color);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
     background: rgba(13, 13, 13, 0.9);
+    margin: 0 auto;
 }
 
-#disqus-container {
-    display: none; /* 댓글 컨테이너는 기본적으로 숨김 */
-    border: 2px solid var(--border-color);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 255, 222, 0.2);
-    background: rgba(13, 13, 13, 0.9);
-    width: 100%;
-    box-sizing: border-box;
-    max-width: 800px;
-}
-
-#game-container {
+/* Mode Selection */
+.mode-selection {
     display: flex;
     gap: 20px;
+    margin-top: 20px;
 }
 
-#tetris-board {
-    border: 2px solid var(--border-color);
-    background-color: #000;
+.mode-card {
+    flex: 1;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: rgba(0, 255, 222, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
+.mode-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px var(--border-color);
+    background: rgba(0, 255, 222, 0.1);
+}
+
+.mode-card h2 {
+    font-family: var(--title-font);
+    color: var(--highlight-color);
+    margin-top: 0;
+}
+
+/* Animal Test UI */
+#image-preview-container {
+    width: 300px;
+    height: 300px;
+    border: 2px dashed var(--border-color);
+    margin: 0 auto 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    cursor: pointer;
+}
+
+#face-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--highlight-color);
+    box-shadow: 0 0 10px var(--highlight-color);
+    animation: scan 2s linear infinite;
+    z-index: 10;
+}
+
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+#results-container {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.result-bar-container {
+    width: 100%;
+    background: #333;
+    height: 30px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.result-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--border-color), var(--highlight-color));
+    transition: width 0.5s ease-out;
+}
+
+.result-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    line-height: 30px;
+    text-shadow: 1px 1px 2px #000;
+    font-family: var(--title-font);
+}
+
+/* Common Components */
 .title {
     font-family: var(--title-font);
     font-size: 2.5rem;
@@ -87,6 +168,62 @@ body {
 .subtitle {
     font-size: 1.2rem;
     margin-bottom: 30px;
+}
+
+.highlight {
+    color: var(--highlight-color);
+    font-family: var(--title-font);
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-family: var(--title-font);
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+}
+
+.secondary-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color);
+}
+
+button:hover {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+#disqus-container {
+    width: 100%;
+    max-width: 800px;
+    margin-top: 50px;
+}
+
+/* Game Styles */
+#game-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+#tetris-board {
+    border: 2px solid var(--border-color);
+    background-color: #000;
 }
 
 #next-piece {
@@ -117,41 +254,6 @@ body {
     color: var(--highlight-color);
 }
 
-.button-group {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-button {
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-family: var(--title-font);
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-#start-game, #submit-form, #play-again {
-    background-color: var(--highlight-color);
-    color: var(--background-color);
-}
-
-.secondary-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color) !important;
-    color: var(--text-color);
-}
-
-button:hover {
-    filter: brightness(1.2);
-    transform: scale(1.05);
-}
-
-#form-status.success { color: var(--success-color); }
-#form-status.error { color: var(--error-color); }
-
 #leaderboard-table {
     width: 100%;
     border-collapse: collapse;
@@ -169,12 +271,8 @@ button:hover {
 }
 
 @media (max-width: 600px) {
-    #game-container { flex-direction: column; }
-    .button-group { flex-direction: column; }
-    #intro-screen, #leaderboard-screen, #partnership-screen, #disqus-container {
-      padding: 20px;
-    }
-    .title {
-      font-size: 2rem;
-    }
+    #game-container, .mode-selection { flex-direction: column; align-items: center; }
+    .button-group { flex-direction: column; width: 100%; }
+    .title { font-size: 1.8rem; }
+    .mode-card { width: 100%; }
 }
