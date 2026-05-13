@@ -22,6 +22,7 @@ A multifunctional web application featuring a cyberpunk-themed Tetris game and a
 - **Responsive Design:** Optimized for both desktop and mobile.
 - **Partnership Form:** Integrated Formspree contact form.
 - **Community:** Disqus comments for user interaction.
+- **Monetization:** Integrated Google AdSense for revenue.
 
 ## Implementation Plan (Current Phase)
 
