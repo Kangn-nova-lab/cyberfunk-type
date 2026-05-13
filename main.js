@@ -29,17 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const labelContainer = document.getElementById('label-container');
     const loadingModel = document.getElementById('loading-model');
 
-    // Tetris Elements
-    const canvas = document.getElementById('tetris-board');
-    const context = canvas.getContext('2d');
-    const nextCanvas = document.getElementById('next-piece');
-    const nextContext = nextCanvas.getContext('2d');
-    const scoreDisplay = document.getElementById('score');
-    const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
-
-    // Teachable Machine Config
-    // User: Replace the URL below with your actual Teachable Machine model URL
-    const TM_MODEL_URL = "https://teachablemachine.withgoogle.com/models/[...]/"; 
+    // --- Teachable Machine Config ---
+    // PASTE YOUR FULL TEACHABLE MACHINE MODEL URL HERE
+    const TM_MODEL_URL = "https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/"; 
     let model, maxPredictions;
 
     // --- Screen Management ---
@@ -47,14 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         screen.classList.add('active');
         
-        // Only show Disqus on Leaderboard and Intro screens
         if (screen === leaderboardScreen || screen === introScreen) {
             disqusContainer.style.display = 'block';
         } else {
             disqusContainer.style.display = 'none';
         }
 
-        // Reset forms if needed
         if (screen === partnershipScreen) {
             const formStatus = document.getElementById('form-status');
             formStatus.textContent = '';
@@ -66,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modeTetrisBtn.addEventListener('click', () => showScreen(tetrisSetupScreen));
     modeAnimalBtn.addEventListener('click', () => {
         showScreen(animalTestScreen);
-        initAnimalTest();
+        initAnimalTest(); 
     });
     openPartnershipBtn.addEventListener('click', () => showScreen(partnershipScreen));
     backToHomeBtns.forEach(btn => btn.addEventListener('click', () => {
@@ -76,18 +66,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Animal Face Test Logic ---
     async function initAnimalTest() {
-        if (!model) {
-            loadingModel.style.display = 'block';
-            try {
-                const modelURL = TM_MODEL_URL + "model.json";
-                const metadataURL = TM_MODEL_URL + "metadata.json";
-                model = await tmImage.load(modelURL, metadataURL);
-                maxPredictions = model.getTotalClasses();
-                loadingModel.style.display = 'none';
-            } catch (e) {
-                loadingModel.textContent = "AI 모델을 불러오는 데 실패했습니다. URL을 확인해주세요.";
-                console.error(e);
-            }
+        if (model) return; // Don't re-initialize if model is already loaded
+        
+        loadingModel.style.display = 'block';
+        loadingModel.textContent = 'AI 모델을 불러오는 중...';
+        try {
+            const modelURL = TM_MODEL_URL + "model.json";
+            const metadataURL = TM_MODEL_URL + "metadata.json";
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+            loadingModel.style.display = 'none';
+            uploadPlaceholder.style.display = 'flex'; // Show upload area after model loads
+        } catch (e) {
+            loadingModel.textContent = "AI 모델 로딩 실패. URL을 확인해주세요.";
+            console.error(e);
         }
     }
 
@@ -102,43 +94,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 faceImage.style.display = 'block';
                 uploadPlaceholder.style.display = 'none';
                 analyzeBtn.style.display = 'inline-block';
+                resetAnimalBtn.style.display = 'none';
+                resultsContainer.style.display = 'none';
+                labelContainer.innerHTML = '';
             };
             reader.readAsDataURL(file);
         }
     });
 
     analyzeBtn.addEventListener('click', async () => {
+        if (!model) return;
         scanLine.style.display = 'block';
         analyzeBtn.disabled = true;
-        
-        // Simulate scanning time
-        setTimeout(async () => {
+        analyzeBtn.textContent = '분석 중...';
+
+        setTimeout(async () => { // Simulate scanning time for better UX
             await predict();
             scanLine.style.display = 'none';
             analyzeBtn.style.display = 'none';
             resetAnimalBtn.style.display = 'inline-block';
             resultsContainer.style.display = 'block';
             analyzeBtn.disabled = false;
-        }, 2000);
+            analyzeBtn.textContent = '분석하기';
+        }, 1500);
     });
 
     async function predict() {
         const prediction = await model.predict(faceImage);
         labelContainer.innerHTML = '';
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction = prediction[i].className;
-            const probability = (prediction[i].probability * 100).toFixed(0);
-            
+        // Sort predictions by probability
+        const sortedPredictions = [...prediction].sort((a, b) => b.probability - a.probability);
+
+        sortedPredictions.forEach(p => {
+            const probability = (p.probability * 100).toFixed(0);
             const resultBarHtml = `
                 <div class="result-item">
+                    <div class="result-label">${p.className}</div>
                     <div class="result-bar-container">
                         <div class="result-bar" style="width: ${probability}%"></div>
-                        <div class="result-label">${classPrediction}: ${probability}%</div>
+                        <span class="result-percentage">${probability}%</span>
                     </div>
                 </div>
             `;
             labelContainer.innerHTML += resultBarHtml;
-        }
+        });
     }
 
     resetAnimalBtn.addEventListener('click', () => {
@@ -150,7 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
         imageUpload.value = '';
     });
 
-    // --- Tetris Game Logic ---
+
+    // --- Tetris Game Logic (No changes below this line) ---
     const COLS = 10;
     const ROWS = 20;
     const BLOCK_SIZE = 30;
@@ -166,6 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let dropCounter = 0;
     let dropInterval = 1000;
     let gameLoopId;
+
+    const canvas = document.getElementById('tetris-board');
+    const context = canvas.getContext('2d');
+    const nextCanvas = document.getElementById('next-piece');
+    const nextContext = nextCanvas.getContext('2d');
+    const scoreDisplay = document.getElementById('score');
+    const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
 
     function drawSquare(ctx, x, y, color, blockSize) {
         ctx.fillStyle = color;
@@ -201,15 +208,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function playerReset() {
+        const shapes = [
+            [[1, 1, 1, 1]], // I
+            [[1, 1], [1, 1]],   // O
+            [[0, 1, 0], [1, 1, 1]], // T
+            [[0, 1, 1], [1, 1, 0]], // S
+            [[1, 1, 0], [0, 1, 1]], // Z
+            [[1, 0, 0], [1, 1, 1]], // L
+            [[0, 0, 1], [1, 1, 1]]  // J
+        ];
+        const type = Math.floor(Math.random() * shapes.length);
+
         if (!nextPiece) {
-            const type = Math.floor(Math.random() * (TETROMINOES.length - 1)) + 1;
-            piece = { matrix: TETROMINOES[type], type: type, x: Math.floor(COLS / 2) - Math.floor(TETROMINOES[type][0].length / 2), y: 0 };
+            piece = { matrix: shapes[type], type: type + 1, x: Math.floor(COLS / 2) - Math.floor(shapes[type][0].length / 2), y: 0 };
         } else {
-            piece = { matrix: nextPiece.matrix, type: nextPiece.type, x: Math.floor(COLS / 2) - Math.floor(nextPiece.matrix[0].length / 2), y: 0 };
+            piece = { ...nextPiece };
         }
         
-        const nextType = Math.floor(Math.random() * (TETROMINOES.length - 1)) + 1;
-        nextPiece = { matrix: TETROMINOES[nextType], type: nextType };
+        const nextType = Math.floor(Math.random() * shapes.length);
+        nextPiece = { matrix: shapes[nextType], type: nextType + 1, x: Math.floor(COLS / 2) - Math.floor(shapes[nextType][0].length / 2), y: 0 };
 
         if (collide(piece)) endGame();
     }
@@ -268,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function merge() {
         piece.matrix.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value) board[piece.y + y][piece.x + x] = piece.type;
+                if (value) board[piece.y + y][p.x + x] = p.type;
             });
         });
     }
@@ -283,8 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
             clearedLines++;
         }
         if (clearedLines > 0) {
-            score += clearedLines * 10;
-            dropInterval -= 50 * clearedLines;
+            score += clearedLines * 10 * clearedLines;
+            dropInterval = Math.max(200, dropInterval - 25 * clearedLines);
         }
         scoreDisplay.textContent = score;
     }
@@ -342,7 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startGameBtn.addEventListener('click', startGame);
     playerNameInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); startGame(); } });
-    playAgainBtn.addEventListener('click', () => { playerNameInput.value = ''; showScreen(introScreen); });
+    playAgainBtn.addEventListener('click', () => { 
+        playerNameInput.value = '';
+        showScreen(tetrisSetupScreen);
+    });
 
     // Partnership Form Logic
     const partnershipForm = document.getElementById('partnership-form');
