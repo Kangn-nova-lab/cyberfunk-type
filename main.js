@@ -201,11 +201,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function playerReset() {
-        const type = Math.floor(Math.random() * (TETROMINOES.length - 1)) + 1;
-        piece = { matrix: TETROMINOES[type], type: type, x: Math.floor(COLS / 2) - Math.floor(TETROMINOES[type][0].length / 2), y: 0 };
-        if (collide(piece)) endGame();
+        if (!nextPiece) {
+            const type = Math.floor(Math.random() * (TETROMINOES.length - 1)) + 1;
+            piece = { matrix: TETROMINOES[type], type: type, x: Math.floor(COLS / 2) - Math.floor(TETROMINOES[type][0].length / 2), y: 0 };
+        } else {
+            piece = { matrix: nextPiece.matrix, type: nextPiece.type, x: Math.floor(COLS / 2) - Math.floor(nextPiece.matrix[0].length / 2), y: 0 };
+        }
+        
         const nextType = Math.floor(Math.random() * (TETROMINOES.length - 1)) + 1;
         nextPiece = { matrix: TETROMINOES[nextType], type: nextType };
+
+        if (collide(piece)) endGame();
     }
 
     function playerDrop() {
@@ -216,6 +222,18 @@ document.addEventListener('DOMContentLoaded', () => {
             playerReset();
             sweep();
         }
+        dropCounter = 0;
+    }
+
+    function playerHardDrop() {
+        if (!piece) return;
+        while (!collide(piece)) {
+            piece.y++;
+        }
+        piece.y--;
+        merge();
+        playerReset();
+        sweep();
         dropCounter = 0;
     }
 
@@ -286,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         score = 0;
         scoreDisplay.textContent = score;
         dropInterval = 1000;
+        nextPiece = null;
         playerReset();
         showScreen(gameScreen);
         update();
@@ -359,6 +378,10 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (event.key === 'ArrowRight') playerMove(1);
             else if (event.key === 'ArrowDown') playerDrop();
             else if (event.key === 'ArrowUp') playerRotate();
+            else if (event.key === ' ') {
+                event.preventDefault();
+                playerHardDrop();
+            }
         }
     });
 
