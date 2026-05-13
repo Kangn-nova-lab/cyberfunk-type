@@ -30,8 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingModel = document.getElementById('loading-model');
 
     // --- Teachable Machine Config ---
-    // PASTE YOUR FULL TEACHABLE MACHINE MODEL URL HERE
-    const TM_MODEL_URL = "https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/"; 
+    const TM_MODEL_URL = "https://teachablemachine.withgoogle.com/models/Rlcz1w9DH/"; 
     let model, maxPredictions;
 
     // --- Screen Management ---
@@ -150,13 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- Tetris Game Logic (No changes below this line) ---
+    // --- Tetris Game Logic ---
     const COLS = 10;
     const ROWS = 20;
     const BLOCK_SIZE = 30;
     const NEXT_BLOCK_SIZE = 30;
     const COLORS = [null, '#ff00ff', '#ffff00', '#00ffff', '#0000ff', '#ffa500', '#00ff00', '#ff0000'];
-    const TETROMINOES = [[], [[1, 1, 1], [0, 1, 0]], [[1, 1], [1, 1]], [[1, 1, 1, 1]], [[1, 0, 0], [1, 1, 1]], [[0, 0, 1], [1, 1, 1]], [[0, 1, 1], [1, 1, 0]], [[1, 1, 0], [0, 1, 1]]];
+    const TETROMINOES = [
+        [], 
+        [[1, 1, 1], [0, 1, 0]], 
+        [[1, 1], [1, 1]], 
+        [[1, 1, 1, 1]], 
+        [[1, 0, 0], [1, 1, 1]], 
+        [[0, 0, 1], [1, 1, 1]], 
+        [[0, 1, 1], [1, 1, 0]], 
+        [[1, 1, 0], [0, 1, 1]]
+    ];
 
     let board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
     let score = 0;
@@ -285,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function merge() {
         piece.matrix.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value) board[piece.y + y][p.x + x] = p.type;
+                if (value) board[piece.y + y][piece.x + x] = piece.type;
             });
         });
     }
