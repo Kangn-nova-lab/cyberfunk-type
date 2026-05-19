@@ -23,21 +23,28 @@ A multifunctional web application featuring a cyberpunk-themed Tetris game and a
 - **Partnership Form:** Integrated Formspree contact form.
 - **Community:** Disqus comments for user interaction.
 - **Monetization:** Integrated Google AdSense for revenue.
+- **AdSense Optimization (High Quality):**
+    *   **Transparency:** Added Privacy Policy and About Us sections.
+    *   **Rich Content:** Detailed game guides and AI technology explanations.
+    *   **Navigation:** Global navigation bar for easier user movement.
+    *   **SEO:** Enhanced metadata and semantic HTML structure.
 
 ## Implementation Plan (Current Phase)
 
-1.  **Add Animal Face Test UI:**
-    *   Create a new `#animal-test-screen` in `index.html`.
-    *   Include Teachable Machine Image Library scripts.
-    *   Add file input and result display elements.
+1.  **Enhance Content & Transparency:**
+    *   Add a detailed "About" section describing the cyberpunk concept.
+    *   Create a "Privacy Policy" section (mandatory for AdSense).
+    *   Add "How to Play" guides for Tetris and the AI Test.
 
-2.  **Style the AI Screen:**
-    *   Design a "Scanner" effect for the image preview.
-    *   Add glowing progress bars for result percentages.
-    *   Ensure consistency with the existing CSS variables.
+2.  **Improve Navigation:**
+    *   Implement a persistent navigation bar (`<nav>`) across all screens.
+    *   Ensure all core sections are accessible within 1-2 clicks.
 
-3.  **Integrate Teachable Machine Logic:**
-    *   Load the model from the user-provided URL.
-    *   Handle image upload and preprocessing.
-    *   Run inference and update the UI with the results.
-    *   Add navigation logic to switch to the AI screen from the home page.
+3.  **Optimize SEO & Metadata:**
+    *   Add descriptive `<meta name="description">` and keywords.
+    *   Use semantic HTML tags (`<header>`, `<main>`, `<footer>`).
+    *   Improve image alt tags and headings structure.
+
+4.  **Final Polish:**
+    *   Ensure all links and forms are fully functional.
+    *   Update `main.js` to handle the new navigation and content screens.

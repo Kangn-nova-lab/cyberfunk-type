@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>사이버펑크 유니버스</title>
+    <title>사이버펑크 유니버스 - 테트리스 & AI 동물상 테스트</title>
+    <meta name="description" content="사이버펑크 스타일의 클래식 테트리스 게임과 AI 기반 동물상 테스트를 한 곳에서 즐겨보세요. 혁신적인 웹 기술로 구현된 독특한 사용자 경험을 제공합니다.">
+    <meta name="keywords" content="테트리스, 동물상 테스트, AI 테스트, 사이버펑크, 게임, 웹게임, 무료게임">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,45 +14,99 @@
     <meta name="google-adsense-account" content="ca-pub-1629372970003645">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1629372970003645"
      crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0TPVYG8G9D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0TPVYG8G9D');
+    </script>
 </head>
 <body>
-    <div id="main-content">
+    <header id="global-header">
+        <nav>
+            <div class="logo">CYBERPUNK UNIVERSE</div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item" data-screen="intro-screen">홈</a></li>
+                <li><a href="#" class="nav-item" data-screen="guide-screen">이용방법</a></li>
+                <li><a href="#" class="nav-item" data-screen="about-screen">소개</a></li>
+                <li><a href="#" class="nav-item" data-screen="partnership-screen">제휴</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
         <!-- Intro Screen -->
         <div id="intro-screen" class="screen active">
             <h1 class="title">사이버펑크 유니버스</h1>
-            <p class="subtitle">모드를 선택하세요</p>
+            <p class="subtitle">미래형 블록 게임과 AI 분석을 한 곳에서 경험하세요</p>
             <div class="mode-selection">
                 <div class="mode-card" id="mode-tetris">
                     <h2>테트리스</h2>
-                    <p>클래식 블록 쌓기</p>
-                    <button class="primary-btn">입장</button>
+                    <p>클래식 블록 쌓기의 미래</p>
+                    <button class="primary-btn">입장하기</button>
                 </div>
                 <div class="mode-card" id="mode-animal">
                     <h2>동물상 테스트</h2>
-                    <p>AI가 분석하는 나의 동물상</p>
-                    <button class="primary-btn">입장</button>
+                    <p>AI가 분석하는 당신의 잠재적 동물상</p>
+                    <button class="primary-btn">입장하기</button>
                 </div>
             </div>
-            <div class="button-group" style="margin-top: 30px;">
-                <button id="open-partnership" class="secondary-btn">제휴 문의</button>
+        </div>
+
+        <!-- Guide Screen -->
+        <div id="guide-screen" class="screen">
+            <h1 class="title">이용 방법</h1>
+            <div class="content-text">
+                <section>
+                    <h2 class="highlight">테트리스 (Tetris)</h2>
+                    <p>좌우 방향키로 블록을 이동하고, 상단 방향키로 회전시킵니다. 하단 방향키는 빠른 낙하, <strong>스페이스바</strong>는 즉시 낙하(Hard Drop)입니다. 한 줄을 가득 채우면 점수를 획득하며 레벨이 올라갈수록 속도가 빨라집니다.</p>
+                </section>
+                <section>
+                    <h2 class="highlight">AI 동물상 테스트</h2>
+                    <p>Teachable Machine 기술을 활용하여 당신의 사진을 분석합니다. 강아지상, 고양이상 등 당신과 가장 닮은 동물을 퍼센트로 알려드립니다. 업로드된 사진은 서버에 저장되지 않으며 브라우저 내에서 즉시 분석됩니다.</p>
+                </section>
             </div>
+            <button class="back-to-home-btn secondary-btn">홈으로 돌아가기</button>
+        </div>
+
+        <!-- About Screen -->
+        <div id="about-screen" class="screen">
+            <h1 class="title">프로젝트 소개</h1>
+            <div class="content-text">
+                <p><strong>사이버펑크 유니버스</strong>는 최신 웹 기술과 예술적인 디자인을 결합하여 사용자에게 독특한 경험을 제공하기 위해 시작된 프로젝트입니다. 단순한 오락을 넘어, 인공지능 기술을 일상적인 재미로 연결하는 실험적인 플랫폼입니다.</p>
+                <p>우리는 오픈소스 기술(TensorFlow.js, Teachable Machine)을 적극 활용하며, 프레임워크 없는 순수 JavaScript의 강력함을 증명하고자 합니다. 사용자 중심의 디자인과 개인정보 보호를 최우선으로 생각합니다.</p>
+            </div>
+            <button class="back-to-home-btn secondary-btn">홈으로 돌아가기</button>
+        </div>
+
+        <!-- Privacy Screen -->
+        <div id="privacy-screen" class="screen">
+            <h1 class="title">개인정보처리방침</h1>
+            <div class="content-text" style="font-size: 0.9rem; text-align: left;">
+                <p>본 사이트는 사용자의 개인정보를 소중히 다룹니다. 동물상 테스트에 사용되는 모든 이미지는 사용자의 기기에서 직접 처리되며, 당사의 서버로 전송되거나 저장되지 않습니다.</p>
+                <p>Google AdSense 광고 서비스를 이용하며, 이를 위해 쿠키가 사용될 수 있습니다. 광고주는 쿠키를 통해 사용자의 관심사에 맞는 광고를 게재할 수 있습니다. 사용자는 브라우저 설정에서 쿠키 수집을 거부할 수 있습니다.</p>
+            </div>
+            <button class="back-to-home-btn secondary-btn">홈으로 돌아가기</button>
         </div>
 
         <!-- Tetris Setup Screen -->
         <div id="tetris-setup-screen" class="screen">
-            <h1 class="title">테트리스</h1>
-            <p class="subtitle">이름을 입력하고 시작하세요</p>
+            <h1 class="title">테트리스 시작</h1>
+            <p class="subtitle">리더보드에 등록할 이름을 입력하세요</p>
             <input type="text" id="player-name" placeholder="이름 입력">
             <div class="button-group">
-                <button id="start-game">게임 시작</button>
-                <button class="back-to-home-btn secondary-btn">뒤로 가기</button>
+                <button id="start-game" class="primary-btn">게임 시작</button>
+                <button class="back-to-home-btn secondary-btn">취소</button>
             </div>
         </div>
 
         <!-- Animal Test Screen -->
         <div id="animal-test-screen" class="screen">
             <h1 class="title">동물상 테스트</h1>
-            <p class="subtitle">AI가 당신의 얼굴을 분석합니다</p>
+            <p class="subtitle">AI가 당신의 얼굴을 분석합니다 (서버에 저장되지 않음)</p>
             
             <div id="upload-container">
                 <div id="image-preview-container">
@@ -68,12 +124,12 @@
                 </div>
 
                 <div class="button-group">
-                    <button id="analyze-btn" class="primary-btn" style="display: none;">분석하기</button>
-                    <button id="reset-animal-test" class="secondary-btn" style="display: none;">다시 하기</button>
+                    <button id="analyze-btn" class="primary-btn" style="display: none;">분석 시작</button>
+                    <button id="reset-animal-test" class="secondary-btn" style="display: none;">다른 사진으로 하기</button>
                     <button class="back-to-home-btn secondary-btn">뒤로 가기</button>
                 </div>
             </div>
-            <div id="loading-model" style="display: none; margin-top: 20px;">AI 모델을 불러오는 중...</div>
+            <div id="loading-model" style="display: none; margin-top: 20px;">AI 모델 로딩 중...</div>
         </div>
 
         <!-- Partnership Screen -->
@@ -94,10 +150,10 @@
                 </div>
                 <div class="form-group">
                     <label for="message">제휴 내용</label>
-                    <textarea id="message" name="message" required placeholder="제휴하고 싶은 내용을 적어주세요" rows="5"></textarea>
+                    <textarea id="message" name="message" required placeholder="제휴하고 싶은 내용을 상세히 적어주세요" rows="5"></textarea>
                 </div>
                 <div class="button-group">
-                    <button type="submit" id="submit-form">문의 보내기</button>
+                    <button type="submit" id="submit-form" class="primary-btn">문의 보내기</button>
                     <button type="button" class="back-to-home-btn secondary-btn">뒤로 가기</button>
                 </div>
                 <p id="form-status"></p>
@@ -109,13 +165,13 @@
             <div id="game-container">
                 <canvas id="tetris-board" width="300" height="600"></canvas>
                 <div id="game-info">
-                    <h1 class="title">테트리스</h1>
+                    <h1 class="title">TETRIS</h1>
                     <div class="info-item">
                         <h2>점수</h2>
                         <p id="score">0</p>
                     </div>
                     <div class="info-item">
-                        <h2>다음</h2>
+                        <h2>다음 블록</h2>
                         <canvas id="next-piece" width="120" height="120"></canvas>
                     </div>
                 </div>
@@ -137,8 +193,8 @@
                 </tbody>
             </table>
             <div class="button-group">
-                <button id="play-again">다시하기</button>
-                <button class="back-to-home-btn secondary-btn">홈으로</button>
+                <button id="play-again" class="primary-btn">다시 도전하기</button>
+                <button class="back-to-home-btn secondary-btn">메인으로</button>
             </div>
         </div>
         
@@ -155,7 +211,17 @@
                 })();
             </script>
         </div>
-    </div>
+    </main>
+
+    <footer id="global-footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Cyberpunk Universe. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#" class="nav-item" data-screen="privacy-screen">개인정보처리방침</a>
+                <a href="#" class="nav-item" data-screen="partnership-screen">제휴문의</a>
+            </div>
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
