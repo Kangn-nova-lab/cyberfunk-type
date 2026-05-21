@@ -225,18 +225,36 @@ document.addEventListener('DOMContentLoaded', () => {
             [[1, 0, 0], [1, 1, 1]], // L
             [[0, 0, 1], [1, 1, 1]]  // J
         ];
-        const type = Math.floor(Math.random() * shapes.length);
-
+        
         if (!nextPiece) {
-            piece = { matrix: shapes[type], type: type + 1, x: Math.floor(COLS / 2) - Math.floor(shapes[type][0].length / 2), y: 0 };
+            const type = Math.floor(Math.random() * shapes.length);
+            piece = { 
+                matrix: shapes[type], 
+                type: type + 1, 
+                x: Math.floor(COLS / 2) - Math.floor(shapes[type][0].length / 2), 
+                y: 0 
+            };
         } else {
-            piece = { ...nextPiece };
+            piece = { 
+                matrix: nextPiece.matrix, 
+                type: nextPiece.type, 
+                x: Math.floor(COLS / 2) - Math.floor(nextPiece.matrix[0].length / 2), 
+                y: 0 
+            };
         }
         
         const nextType = Math.floor(Math.random() * shapes.length);
-        nextPiece = { matrix: shapes[nextType], type: nextType + 1, x: Math.floor(COLS / 2) - Math.floor(shapes[nextType][0].length / 2), y: 0 };
+        nextPiece = { 
+            matrix: shapes[nextType], 
+            type: nextType + 1, 
+            x: 0, 
+            y: 0 
+        };
 
-        if (collide(piece)) endGame();
+        if (collide(piece)) {
+            return false;
+        }
+        return true;
     }
 
     function playerDrop() {
@@ -284,7 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function collide(p) {
         for (let y = 0; y < p.matrix.length; y++) {
             for (let x = 0; x < p.matrix[y].length; x++) {
-                if (p.matrix[y][x] && (board[p.y + y] && board[p.y + y][p.x + x]) !== 0) return true;
+                if (p.matrix[y][x] && 
+                    (board[p.y + y] === undefined || board[p.y + y][p.x + x] === undefined || board[p.y + y][p.x + x] !== 0)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -324,15 +345,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startGame() {
+        stopGame(); // Ensure any existing loop is stopped
+        
         playerName = playerNameInput.value || 'Anonymous';
         board = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
         score = 0;
         scoreDisplay.textContent = score;
         dropInterval = 1000;
+        dropCounter = 0;
+        lastTime = performance.now();
         nextPiece = null;
-        playerReset();
+        
+        if (!playerReset()) {
+            endGame();
+            return;
+        }
+        
         showScreen(gameScreen);
-        update();
+        gameLoopId = requestAnimationFrame(update);
     }
 
     function stopGame() {
